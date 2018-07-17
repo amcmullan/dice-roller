@@ -1,14 +1,14 @@
 
 //allow user input, using readline apparently. because this is node.js.
-var readline = require('readline');
+const readline = require('readline');
 
-var rl = readline.createInterface({
+const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout
 });
 //create a function to randomize a number between 1 and input
 function randomDice(num) {
-	var dice = Math.floor(Math.random() * num + 1); 
+	const dice = Math.floor(Math.random() * num + 1); 
 	return;
 	
 }
