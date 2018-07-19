@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <h> The Die. </h>
 <main>
-<script src="webdice.js"></script>
-<form>
-<div style="height:400;width:200;border:2px solid #ccc;font:16px/26px georgia, garamond, serif;overflow:auto;">
+ 
+<script src="webdice.js">
+  </script>
+<form> <!-- height and width should probably be changed, this is an arbitrary starting point -->
+<div id="dicebox";style="height:400;width:200;border:2px solid #ccc;font:16px/26px georgia, garamond, serif;overflow:auto;">
 
 </div>
-<!-- not sure how to hook the logic into the buttons and spit the result into the div box.
+<!-- not sure how to hook the logic into the buttons and spit the result into the div box. update: use appendChild()
 -->
 What size dice? <input type="text" name="size"><br>
 How many? <input type="text" name="quant"><br>
-any Bonus <input type="text" name="bonus"><br>
+any Bonus <input type="text" name="bonus"><br> 
+  <!--  connect the submit button to executing the diceRoll() function with parameters from the input boxes. send the result to <div> dicebox.
+-->
 <button type=submit>Roll</button>
 
 </form>
