@@ -10,22 +10,34 @@
       /*we define the following variables inside the function so they won't carry over to the next use.*/
 
       const dice = [];
-      let size = document.getElementById("size").value;
-      let quant = document.getElementById("quant").value;
-      let bonus = document.getElementById("bonus").value;
-      for (i = 0; i < quant; i++) {
-        dice.push(Math.floor(Math.random() * size) + 1)
+      const size = document.getElementById("size").value;
+      const quant = document.getElementById("quant").value;
+      const bonus = document.getElementById("bonus").value;
+      if (size > 0 && quant > 0) {
+        for (i = 0; i < quant; i++) {
+          dice.push(Math.floor(Math.random() * size) + 1)
+        }
+        //console.log(dice.toString()); 
+        const sum = dice.reduce(function(a, b) {
+          return a + b;
+        }, 0);
+        //console.log(sum); 
+        /*in order to add to the content of dicebox we need to use .innerHTML += 'blah' otherwise
+        it will overwrite everything in that element with the new value       ^significant!*/
+        ;
+        document.getElementById("dicebox").innerHTML += ` you roll ${quant+"d"+size}... the dice stop on.... `;
+        dice.map(function(item) {
+          return document.getElementById("dicebox").innerHTML += `<b> ${item}</b>...   `
+        })
+        if (bonus > 0) {
+          document.getElementById("dicebox").innerHTML += `<br>with a bonus of ${bonus}`;
+        }
+        document.getElementById("dicebox").innerHTML += `<br>for a total of ${parseInt(sum) + parseInt(bonus)} <br>`;
+        /*document.getElementById("dicebox").innerHTML += ` you roll ${quant+"d"+size}... it's a  ${dice}!... with a bonus of ${bonus} for a total of ${parseInt(sum) + parseInt(bonus)} <br>`;*/
+        // <br> gives us a new line each time the dice are rolled.;
+      } else {
+        document.getElementById("dicebox").innerHTML += `Either you are trying to roll zero (or less) dice or dice with zero (or less) sides.<br>`;
       }
-      //console.log(dice.toString()); 
-      const sum = dice.reduce(function(a, b) {
-        return a + b;
-      }, 0);
-      //console.log(sum); 
-      /*in order to add to the content of dicebox we need to use .innerHTML += 'blah' therwise
-      it will overwrite everything in that element with the new value       ^significant!*/
-      ;
-      document.getElementById("dicebox").innerHTML += ` you roll ${quant+"d"+size}... it's a  ${dice}!... with a bonus of ${bonus} for a total of ${parseInt(sum) + parseInt(bonus)} <br>`;
-      // <br> gives us a new line each time the dice are rolled.;
     }
 
   </script>
@@ -37,7 +49,7 @@
   <p id="dicebox">
 
   </p>
-  
+
 </main>
 
 </html>
