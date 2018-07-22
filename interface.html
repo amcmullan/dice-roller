@@ -1,23 +1,42 @@
 <!DOCTYPE html>
-<h> The Die. </h>
+
+<h> The Die.
+  <meta charset="UTF-8">
+  <!--if we don't declare the charset browsers will throw an error to console, and our site will have trouble with other inputs-->
+</h>
 <main>
- <!-- need to actually create and write out webdice, using dice.js would not work as it is based around input from the console. -->
-<script src="webdice.js">
+  <script>
+    function diceRoller() {
+      /*we define the following variables inside the function so they won't carry over to the next use.*/
+
+      const dice = [];
+      let size = document.getElementById("size").value;
+      let quant = document.getElementById("quant").value;
+      let bonus = document.getElementById("bonus").value;
+      for (i = 0; i < quant; i++) {
+        dice.push(Math.floor(Math.random() * size) + 1)
+      }
+      //console.log(dice.toString()); 
+      const sum = dice.reduce(function(a, b) {
+        return a + b;
+      }, 0);
+      //console.log(sum); 
+      /*in order to add to the content of dicebox we need to use .innerHTML += 'blah' therwise
+      it will overwrite everything in that element with the new value       ^significant!*/
+      ;
+      document.getElementById("dicebox").innerHTML += ` you roll ${quant+"d"+size}... it's a  ${dice}!... with a bonus of ${bonus} for a total of ${parseInt(sum) + parseInt(bonus)} <br>`;
+      // <br> gives us a new line each time the dice are rolled.;
+    }
+
   </script>
-<form> <!-- height and width should probably be changed, this is an arbitrary starting point -->
-<div id="dicebox";style="height:400;width:200;border:2px solid #ccc;font:16px/26px georgia, garamond, serif;overflow:auto;">
+  <p>
+    What size dice? <input id="size" type="text" value="6"><br> How many? <input id="quant" type="text" value="1"><br> any Bonus <input id="bonus" type="text" value="0"><br>
 
-</div>
-<!-- not sure how to hook the logic into the buttons and spit the result into the div box. update: use appendChild()
--->
-What size dice? <input type="text" name="size"><br>
-How many? <input type="text" name="quant"><br>
-any Bonus <input type="text" name="bonus"><br> 
-  <!--  connect the submit button to executing the diceRoll() function with parameters from the input boxes. send the result to <div> dicebox.
--->
-<button type=submit>Roll</button>
+  </p>
+  <p id="dicebox">
 
-</form>
+  </p>
+  <button onclick="diceRoller()">Roll</button>
 </main>
 
 </html>
