@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<h> The Die.
+  <meta charset="UTF-8">
+  <script>
+
+
+  </script>
+</h>
+<main>
+<div id="images">
+<img id="PC" width="32" height="32" src="good.png">
+<img id="enemy" width="64" height="64" src="evil.png">
+  </div>
+  <canvas id="canvas" height="320" width="320"></canvas>
+  <script>
+  var imagesource = document.getElementById("images");
+  imagesource.style.display = "none"; // gives us a source to pull from, but not visible
+  
+    var ground = [
+      [3,3,3,3,3,3,3,3,3,3],
+[3,12,12,12,12,12,12,12,12,3],
+[3,12,12,12,12,12,12,12,12,3],
+[3,12,12,12,12,12,12,12,12,3],
+[5,12,12,12,12,12,12,12,12,6],
+[5,12,12,12,12,12,12,12,12,6],
+[3,12,12,12,12,12,12,12,12,3],
+[3,12,12,12,12,12,12,12,12,3],
+[3,12,12,12,12,12,12,12,12,3],
+[3,3,3,3,3,3,3,3,3,3]
+    ];
+
+	
+	let pcLocation = [32, 156];
+	let npcLocation = [224, 128];
+	
+	
+	var mapIndexOffset = -1;
+    var tilesetImage = new Image();
+    tilesetImage.src = 'platformer_tiles.png';
+    tilesetImage.onload = drawImage;
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var tileSize = 32; // The size of a tile (32×32)
+    var rowTileCount = 10; // The number of tiles in a row of our background
+    var colTileCount = 10; // The number of tiles in a column of our background
+    var imageNumTiles = 3; // The number of tiles per row in the tileset image
+    function drawImage() {
+      for (var r = 0; r < rowTileCount; r++) {
+        for (var c = 0; c < colTileCount; c++) {
+          var tile = ground[r][c]+mapIndexOffset;
+          var tileRow = (tile / imageNumTiles) | 0; // Bitwise OR operation
+          var tileCol = (tile % imageNumTiles) | 0;
+          ctx.drawImage(tilesetImage, (tileCol * tileSize), (tileRow * tileSize), tileSize, tileSize, (c * tileSize), (r * tileSize), tileSize, tileSize);
+		  
+		  /*tile = layer1[ r ][ c ];// run through each space again to place props/units
+      tileRow = (tile / imageNumTiles) | 0;
+      tileCol = (tile % imageNumTiles) | 0;
+      ctx.drawImage(tilesetImage, (tileCol * tileSize), (tileRow * tileSize), tileSize, tileSize, (c * tileSize), (r * tileSize), tileSize, tileSize); */
+        }
+      }
+	  	let PC = document.getElementById("PC");
+	let NPC = document.getElementById("enemy");
+	ctx.drawImage(NPC, npcLocation[0], npcLocation[1]);
+	ctx.drawImage(PC, pcLocation[0], pcLocation[1]);
+	
+    }
+	//draw the two combatants at opposite sides of the arena
+
+	function placement() {
+
+
+	};
+	
+	/*
+	function to move around takes the direction from which button was pressed
+	
+	I think this is a dumb way to do it. we should just have a second layer on top, this switch could update the top layer where the PC is and then redraw the whole thing each time something changes.
+	*/
+	function move(dir) {
+	
+	switch (dir) {
+	case 4:
+		pcLocation[0] -= 32;
+		if (pcLocation[0] <= tileSize - tileSize) {
+		pcLocation[0] += 32;
+		/*
+		should report can't move in that direction to combat log and should not subtract movement points.
+		*/
+		} else {
+		console.log(tileSize * rowTileCount - tileSize * 2)
+		console.log(pcLocation[0])
+		drawImage()
+		ctx.drawImage(PC, pcLocation[0], pcLocation[1]);
+		}
+		
+	break;
+	case 6:
+		pcLocation[0] += 32;
+		drawImage()
+		ctx.drawImage(PC, pcLocation[0], pcLocation[1]);
+	break;
+	case 2:
+		pcLocation[1] += 32;
+		ctx.drawImage(PC, pcLocation[0], pcLocation[1]);
+	break;
+	case 8:
+	pcLocation[1] -= 32;
+		ctx.drawImage(PC, pcLocation[0], pcLocation[1]);
+	};
+	}
+	
+
+  </script>
+
+
+
+<button id="buttonEast" onClick="move(6)">></button>
+<button id="buttonWest" onClick="move(4)"><</button>
+
+
+</main>
+
+</html>
